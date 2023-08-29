@@ -2,7 +2,6 @@
 local s,id=GetID()
 function s.initial_effect(c)
 	c:EnableReviveLimit()
-	Pendulum.AddProcedure(c,false)
 	Synchro.AddProcedure(c,aux.FilterBoolFunctionEx(Card.IsSetCard,0x231),1,1,Synchro.NonTunerEx(Card.IsSetCard,0x231),1,99)
 	--Search 1 Diablillo monster in the End Phase
 	local e3=Effect.CreateEffect(c)
@@ -14,7 +13,7 @@ function s.initial_effect(c)
 	e3:SetTarget(s.regtg)
 	e3:SetOperation(s.regop)
 	c:RegisterEffect(e3)
-	--draw
+	--add
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,1))
 	e2:SetCategory(CATEGORY_TOHAND)
