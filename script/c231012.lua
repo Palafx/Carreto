@@ -1,5 +1,5 @@
--- Scareclaw Reich Heart
--- Scripted by Hatter
+--Alfil Diablillo
+--Scripted by EP Custom Cards
 local s,id=GetID()
 function s.initial_effect(c)
 	-- Special Summon procedure
@@ -33,13 +33,16 @@ function s.hspval(e,c)
 	end
 	return 0,zone&0x1f
 end
-function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
-	if chkc then return end
+function s.seqtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 end
 end
-function s.seqop(e,tp,eg,ep,ev,re,r,rp)
-	local tc=e:GetHandler()
-	if not tc:IsRelateToEffect(e) or tc:IsControler(1-tp) or tc:IsImmuneToEffect(e) or Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
-	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOZONE)
-	Duel.MoveSequence(tc,math.log(Duel.SelectDisableField(tp,1,LOCATION_MZONE,0,0),2))
+--Move itself to 1 of your unused MMZ at random
+function s.seqop(e,tp,eg,ep,ev,re,r,rp,chk)
+	local c=e:GetHandler()
+	local numMonsterZones=Duel.GetLocationCount(tp,LOCATION_MZONE)
+	local randomZone=math.random(1,numMonsterZones)
+	if not c:IsRelateToEffect(e) or c:IsControler(1-tp) or not Duel.CheckLocation(tp,LOCATION_MZONE,randomZone) then return end
+	if Duel.NegateAttack() then
+		Duel.MoveSequence(c,randomZone)
+	end
 end
