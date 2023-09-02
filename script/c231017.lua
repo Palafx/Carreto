@@ -69,10 +69,16 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	if #tgf>0 then
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 		if ft<=0 then return end
-		if Duel.SelectYesNo(tp,aux.Stringid(46613515,2)) then
+		--summon as mamy as zones available
+		if ft>2 and Duel.SelectYesNo(tp,aux.Stringid(46613515,2)) then
 			Duel.ConfirmCards(1-tp,tg)
 			Duel.BreakEffect()
 			Duel.SpecialSummon(tg,0,tp,tp,false,false,POS_FACEUP)
+		elseif Duel.SelectYesNo(tp,aux.Stringid(46613515,2)) then
+			Duel.ConfirmCards(1-tp,tg)
+			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
+			local sg=tg:Select(tp,ft,ft,nil)
+			Duel.SpecialSummon(sg,0,tp,tp,false,false,POS_FACEUP)
 		end
 	end
 end

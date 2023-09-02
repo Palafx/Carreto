@@ -8,6 +8,7 @@ function s.initial_effect(c)
 	e1:SetCategory(CATEGORY_SPECIAL_SUMMON)
 	e1:SetType(EFFECT_TYPE_IGNITION)
 	e1:SetRange(LOCATION_HAND)
+	e1:SetCountLimit(1,id,EFFECT_COUNT_CODE_OATH)
 	e1:SetCost(s.spcost)
 	e1:SetTarget(s.sptg)
 	e1:SetOperation(s.spop)
@@ -32,9 +33,9 @@ end
 function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	local g=Duel.GetMatchingGroup(s.cfilter,tp,LOCATION_HAND|LOCATION_DECK,0,nil)
 	local ct=#g
-	if chk==0 then return ct>0 and g:CheckWithSumEqual(Card.GetLevel,6,1,ct) end
+	if chk==0 then return ct>0 and g:CheckWithSumEqual(Card.GetLevel,8,1,ct) end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_TOGRAVE)
-	local cg=g:SelectWithSumEqual(tp,Card.GetLevel,6,1,ct)
+	local cg=g:SelectWithSumEqual(tp,Card.GetLevel,8,1,ct)
 	Duel.SendtoGrave(cg,REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)

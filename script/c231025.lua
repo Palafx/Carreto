@@ -37,8 +37,6 @@ function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 end
 function s.operation(e,tp,eg,ep,ev,re,r,rp)
 	if re:GetHandler():IsRelateToEffect(re) then
-		if Duel.Destroy(eg,REASON_EFFECT) then
-			Duel.Remove(eg,POS_FACEUP,REASON_EFFECT)
-		end
+		Duel.Destroy(eg,REASON_EFFECT,LOCATION_REMOVED)
 	end
 end

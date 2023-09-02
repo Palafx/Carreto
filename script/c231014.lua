@@ -58,7 +58,7 @@ function s.val(e,c)
 end
 --special summon from anywhere
 function s.filter(c,e,tp)
-	return c:IsRace(RACE_FIEND) and (c:GetAttack()==0 or c:GetDefense()==0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsRace(RACE_FIEND) and (c:GetAttack()==0 or c:GetDefense()==0) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and not c:IsCode(id)
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

@@ -1,4 +1,5 @@
 --Llamarada Diablillo
+--Scripted by EP Custom Cards
 local s,id=GetID()
 function s.initial_effect(c)
 	--atk/def
@@ -59,7 +60,7 @@ function s.adop(e,tp,eg,ep,ev,re,r,rp)
 		e2:SetProperty(EFFECT_FLAG_CANNOT_DISABLE)
 		e2:SetCode(EFFECT_UPDATE_ATTACK)
 		e2:SetValue(-val)
-		e2:SetReset(RESET_EVENT+RESETS_STANDARD+RESET_PHASE+PHASE_END)
+		e2:SetReset(RESET_EVENT+RESETS_STANDARD)
 		c:RegisterEffect(e2)
 		Duel.BreakEffect()
 		Duel.Damage(1-tp,val,REASON_EFFECT)

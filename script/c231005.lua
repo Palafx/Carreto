@@ -15,7 +15,7 @@ function s.initial_effect(c)
 	local e2=Effect.CreateEffect(c)
 	e2:SetDescription(aux.Stringid(id,0))
 	e2:SetCategory(CATEGORY_TODECK)
-	e2:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_TRIGGER_F)
+	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_F)
 	e2:SetCode(EVENT_BE_MATERIAL)
 	e2:SetRange(LOCATION_GRAVE)
 	e2:SetCondition(s.tdcon)
@@ -32,7 +32,7 @@ function s.spcon(e,c)
 end
 --redirect
 function s.tdcon(e,tp,eg,ep,ev,re,r,rp)
-	return r==REASON_SYNCHRO
+	return (r&REASON_SYNCHRO)~=0
 end
 function s.tdtg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return true end
