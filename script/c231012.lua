@@ -21,12 +21,14 @@ function s.initial_effect(c)
 	e3:SetOperation(s.seqop)
 	c:RegisterEffect(e3)
 end
-s.sclawfilter=aux.FaceupFilter(Card.IsLevel,5) or aux.FaceupFilter(Card.IsLevel,6)
+function s.filter(c,e,tp)
+	return c:IsLevel(5) or c:IsLevel(6)
+end
 function s.hspval(e,c)
 	local zone=0
 	local left_right=0
 	local tp=c:GetControler()
-	local lg=Duel.GetMatchingGroup(s.sclawfilter,tp,LOCATION_MZONE,0,nil)
+	local lg=Duel.GetMatchingGroup(s.filter,tp,LOCATION_MZONE,0,nil)
 	for tc in lg:Iter() do
 		left_right=tc:IsInMainMZone() and 1 or 0
 		zone=(zone|tc:GetColumnZone(LOCATION_MZONE,left_right,left_right,tp))
