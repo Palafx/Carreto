@@ -40,9 +40,9 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,aux.ReleaseCheckMMZ,nil) end
 	local g=Duel.SelectReleaseGroupCost(tp,nil,1,3,false,aux.ReleaseCheckMMZ,nil)
 	Duel.Release(g,REASON_COST)
-	local og=Duel.GetOperatedGroup()
-	og:KeepAlive()
-	e:SetLabelObject(og)
+	--local og=Duel.GetOperatedGroup():GetFirst()
+	--og:KeepAlive()
+	e:SetLabelObject(g)
 	--can only summon fiend monsters
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
