@@ -62,20 +62,32 @@ function s.lptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	local atkt=e:GetHandler():GetBattleTarget():GetBaseAttack()>0
 	local deft=e:GetHandler():GetBattleTarget():GetBaseDefense()>0
 	if chk==0 then return atkt or deft end
-	local op=Duel.SelectEffect(tp,
-		{atk,aux.Stringid(id,0)},
-		{def,aux.Stringid(id,1)})
-	e:SetLabel(op)
-	if op==1 then 
+	
+	if atkt and deft then --if the monster has positive atk and def
+		local op=Duel.SelectEffect(tp,
+			{atk,aux.Stringid(id,0)},
+			{def,aux.Stringid(id,1)})
+		e:SetLabel(op)
+		if op==1 then 
+			Duel.SetTargetPlayer(tp)
+			Duel.SetTargetParam(atk)
+			Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,atk)
+		elseif op==2 then 
+			Duel.SetTargetPlayer(tp)
+			Duel.SetTargetParam(def)
+			Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,def)
+		end
+	elseif atkt then --if the monster has 0 def or is a Link
+		e:SetLabel(1)
 		Duel.SetTargetPlayer(tp)
 		Duel.SetTargetParam(atk)
 		Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,atk)
-	elseif op==2 then 
+	elseif deft then --if the monster has 0 atk
+		e:SetLabel(2)
 		Duel.SetTargetPlayer(tp)
 		Duel.SetTargetParam(def)
 		Duel.SetOperationInfo(0,CATEGORY_RECOVER,nil,0,tp,def)
 	end
-	
 end
 function s.lpop(e,tp,eg,ep,ev,re,r,rp)
 	local op=e:GetLabel()

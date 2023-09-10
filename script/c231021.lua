@@ -16,15 +16,14 @@ function s.filter(c)
 	return c:IsRace(RACE_FIEND) and c:IsAbleToDeck() and not c:IsPublic()
 end
 function s.target(e,tp,eg,ep,ev,re,r,rp,chk)
-	if chk==0 then return Duel.IsPlayerCanDraw(tp)
-		and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
+	if chk==0 then return Duel.IsPlayerCanDraw(tp) and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_HAND,0,1,nil) end
 	Duel.SetTargetPlayer(tp)
 	Duel.SetOperationInfo(0,CATEGORY_TODECK,nil,1,tp,LOCATION_HAND)
 end
 function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local p=Duel.GetChainInfo(0,CHAININFO_TARGET_PLAYER)
-	Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
-	local g=Duel.SelectMatchingCard(p,s.filter,p,LOCATION_HAND,0,1,99,nil)
+	--Duel.Hint(HINT_SELECTMSG,p,HINTMSG_TODECK)
+	local g=Duel.GetMatchingGroup(s.filter,p,LOCATION_HAND,0,nil)
 	if #g>0 then
 		Duel.ConfirmCards(1-p,g)
 		Duel.Draw(p,#g,REASON_EFFECT)

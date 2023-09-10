@@ -1,5 +1,6 @@
 --Aliento Infernal
 --Scripted by EP Custom Cards
+--Recent issue: shouldnt destroy Field Spells
 local s,id=GetID()
 function s.initial_effect(c)
 	--destroy
@@ -17,7 +18,7 @@ function s.cfilter(c)
 	return c:IsFaceup() and c:GetLevel()>9 and c:IsRace(RACE_FIEND)
 end
 function s.filter(c)
-	return c:IsType(TYPE_SPELL+TYPE_TRAP)
+	return c:IsType(TYPE_SPELL+TYPE_TRAP) and not c:IsType(TYPE_FIELD)
 end
 function s.condition(e,tp,eg,ep,ev,re,r,rp)
 	return Duel.IsExistingMatchingCard(s.cfilter,tp,LOCATION_MZONE,0,1,nil)

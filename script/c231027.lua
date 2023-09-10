@@ -72,7 +72,7 @@ end
 --sp summon
 function s.filter(c,cc,e,tp)
 	return c:IsType(TYPE_SYNCHRO) and c:IsRace(RACE_FIEND) and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
-		and c:HasLevel() and cc:IsCanRemoveCounter(tp,COUNTER_SPELL,c:GetLevel(),REASON_COST)
+		and c:HasLevel() and cc:IsCanRemoveCounter(tp,0x231,c:GetLevel(),REASON_COST)
 end
 function s.sptg(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0

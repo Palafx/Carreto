@@ -43,7 +43,7 @@ function s.rmfilter(c)
 	return c:IsAbleToRemove() and c:IsType(TYPE_TUNER) and aux.SpElimFilter(c)
 end
 function s.tunerfilter(c)
-	return c:IsType(TYPE_TUNER)
+	return c:IsType(TYPE_TUNER) 
 end
 function s.monfilter(c)
 	return c:IsCanBeSpecialSummoned(e,0,tp,false,false)
@@ -61,12 +61,12 @@ function s.activate(e,tp,eg,ep,ev,re,r,rp)
 	local sg=g:Filter(Card.IsRelateToEffect,nil,e)
 	Duel.Remove(sg,POS_FACEUP,REASON_EFFECT)
 	
-	local bc=Duel.GetOperatedGroup():GetCount()
+	local bc=Duel.GetOperatedGroup():GetCount() --checks number removed succesfully
 	if Duel.Draw(tp,bc,REASON_EFFECT)==0 then return end
-	local tgf=Duel.GetOperatedGroup():Filter(s.tunerfilter,1,nil)
+	local tgf=Duel.GetOperatedGroup():Filter(s.tunerfilter,1,nil) --checks if there is a tuner among the drawn cards
 	local ft=Duel.GetLocationCount(tp,LOCATION_MZONE)
 	local tg=Duel.GetOperatedGroup()
-	if #tgf>0 then
+	if #tgf>0 then --if you draw at least 1 tuner
 		if Duel.IsPlayerAffectedByEffect(tp,CARD_BLUEEYES_SPIRIT) then ft=1 end
 		if ft<=0 then return end
 		--summon as mamy as zones available

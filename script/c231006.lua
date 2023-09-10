@@ -1,4 +1,3 @@
---コードブレイカー・ゼロデイ
 --Diablillo Encantador
 --Scripted by EP Custom Cards
 local s,id=GetID()
@@ -37,6 +36,7 @@ function s.initial_effect(c)
 	c:RegisterEffect(e3)
 end
 s.listed_series={0x231}
+--search
 function s.thcon(e,tp,eg,ep,ev,re,r,rp)
 	return r&REASON_EFFECT+REASON_BATTLE~=0
 end

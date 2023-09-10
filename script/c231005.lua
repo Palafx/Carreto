@@ -1,5 +1,5 @@
 --Diablillo Enamorado
---scripted by Naim
+--Scripted by EP Custom Cards
 local s,id=GetID()
 function s.initial_effect(c)
 	--Special Summon it from the hand if you control a Fiend monster

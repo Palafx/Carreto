@@ -67,7 +67,8 @@ function s.nacon(e,tp,eg,ep,ev,re,r,rp)
 	local g=Duel.GetMatchingGroup(s.atkfilter,tp,LOCATION_MZONE,0,nil)
 	local lowestAtk=g:GetMinGroup(Card.GetAttack)
 	local attacked=Duel.GetAttackTarget()
-	return Group.IsContains(lowestAtk,attacked) and Duel.GetAttackTarget():IsType(TYPE_MONSTER) and attacked:IsControler(tp) and not Duel.GetAttacker():IsControler(tp)
+	return attacked and Group.IsContains(lowestAtk,attacked) and Duel.GetAttackTarget():IsType(TYPE_MONSTER) and attacked:IsControler(tp)
+		and not Duel.GetAttacker():IsControler(tp)
 end
 function s.nacost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return e:GetHandler():CheckRemoveOverlayCard(tp,1,REASON_COST) end

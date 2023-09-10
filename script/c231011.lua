@@ -19,9 +19,9 @@ function s.initial_effect(c)
 	e2:SetType(EFFECT_TYPE_SINGLE+EFFECT_TYPE_TRIGGER_O)
 	e2:SetCode(EVENT_SPSUMMON_SUCCESS)
 	e2:SetProperty(EFFECT_FLAG_DELAY)
-	e2:SetCost(s.cost)
-	e2:SetTarget(s.sptg2)
-	e2:SetOperation(s.spop2)
+	e2:SetCost(s.revivecost)
+	e2:SetTarget(s.revivetg)
+	e2:SetOperation(s.reviveop)
 	c:RegisterEffect(e2)
 	--Perform a Fusion Summon
 	local params = {nil,Fusion.OnFieldMat}
@@ -40,9 +40,9 @@ function s.spcost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.CheckReleaseGroupCost(tp,nil,1,false,aux.ReleaseCheckMMZ,nil) end
 	local g=Duel.SelectReleaseGroupCost(tp,nil,1,3,false,aux.ReleaseCheckMMZ,nil)
 	Duel.Release(g,REASON_COST)
-	--local og=Duel.GetOperatedGroup():GetFirst()
-	--og:KeepAlive()
-	e:SetLabelObject(g)
+	for tcg in g:Iter() do
+		tcg:RegisterFlagEffect(id,RESET_EVENT|RESETS_STANDARD,0,1) --ADD A FLAG TO IDENTIFY THE CARDS
+	end
 	--can only summon fiend monsters
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
@@ -71,21 +71,21 @@ function s.spop(e,tp,eg,ep,ev,re,r,rp)
 		Duel.SpecialSummon(c,0,tp,tp,false,false,POS_FACEUP)
 	end
 end
+
 --summon material
 function s.filter(c,e,tp,rc)
-	
-	return c:IsLocation(LOCATION_GRAVE) and rg and c:IsCanBeSpecialSummoned(e,0,tp,false,false)
+	return c:IsLocation(LOCATION_GRAVE) and c:IsCanBeSpecialSummoned(e,0,tp,false,false) and c:GetFlagEffect(id)>0
 end
-function s.sptg2(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
+function s.revivetg(e,tp,eg,ep,ev,re,r,rp,chk,chkc)
 	local rg=e:GetLabelObject()
-	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(rg,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
+	if chk==0 then return Duel.GetLocationCount(tp,LOCATION_MZONE)>0 and Duel.IsExistingMatchingCard(s.filter,tp,LOCATION_GRAVE,0,1,nil,e,tp) end
 	Duel.SetOperationInfo(0,CATEGORY_SPECIAL_SUMMON,nil,1,tp,LOCATION_GRAVE)
 end
-function s.spop2(e,tp,eg,ep,ev,re,r,rp)
+function s.reviveop(e,tp,eg,ep,ev,re,r,rp)
 	local rg=e:GetLabelObject()
 	if Duel.GetLocationCount(tp,LOCATION_MZONE)<=0 then return end
 	Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_SPSUMMON)
-	local g=Duel.SelectMatchingCard(tp,rg,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
+	local g=Duel.SelectMatchingCard(tp,s.filter,tp,LOCATION_GRAVE,0,1,1,nil,e,tp)
 	if #g>0 then
 		Duel.SpecialSummon(g,0,tp,tp,false,false,POS_FACEUP)
 	end
@@ -94,7 +94,7 @@ end
 function s.counterfilter(c)
 	return c:IsRace(RACE_FIEND)
 end
-function s.cost(e,tp,eg,ep,ev,re,r,rp,chk)
+function s.revivecost(e,tp,eg,ep,ev,re,r,rp,chk)
 	if chk==0 then return Duel.GetCustomActivityCount(id,tp,ACTIVITY_SPSUMMON)==0 end
 	local e1=Effect.CreateEffect(e:GetHandler())
 	e1:SetType(EFFECT_TYPE_FIELD)

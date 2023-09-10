@@ -44,12 +44,12 @@ function s.atkop(e,tp,eg,ep,ev,re,r,rp)
 			e1:SetValue(atk)
 			tc:RegisterEffect(e1)
 			if #dg>0 and ex==1 then
-			Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
-			dg=dg:Select(tp,1,1,nil)
-			Duel.HintSelection(dg,true)
-			Duel.BreakEffect()
-			Duel.Destroy(dg,REASON_EFFECT)
-		end
+				Duel.Hint(HINT_SELECTMSG,tp,HINTMSG_DESTROY)
+				dg=dg:Select(tp,1,1,nil)
+				Duel.HintSelection(dg,true)
+				Duel.BreakEffect()
+				Duel.Destroy(dg,REASON_EFFECT)
+			end
 		end
 	end
 end
